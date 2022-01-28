@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+
+
+    <style>
+        body {
+            background-image: linear-gradient(to right top, #1f0537, #380c60, #55108c, #7413bb, #9612eb);
+            height: 100%;
+            margin: 0, auto;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        .card {
+            position: relative;
+            width: 300px;
+            height: 425px;
+            border: 10px solid #9612eb;
+            margin: 60px auto 0 auto;
+            box-shadow: inset 10px 0px 15px 0px rgba(0, 0, 0, 0.1);
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255), rgba(255, 255, 255, 0.5)), url("p-1.jfif");
+            background-position: center;
+            /* Center the image */
+            background-repeat: no-repeat;
+            /* Do not repeat the image */
+            background-size: cover;
+            background-color: #e6f0e6;
+        }
+        
+        .card .text-container {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+        }
+        
+        .strikethrough {
+            text-decoration: line-through;
+        }
+        
+        .card .text-container #head {
+            font-family: 'Nobile', sans-serif;
+            font-size: 1.5em;
+            margin: 60px auto 60px auto;
+        }
+        
+        .card p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            font-family: 'Nobile';
+            color: #331717;
+            font-style: italic;
+            text-align: center;
+            margin: 30px auto 0px auto;
+        }
+        
+        .card .front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: -10px 0px 0px -10px;
+            border: 10px solid #9612eb;
+            backface-visibility: hidden;
+            background-color: #9612eb;
+            /* background-image: url($cover-image);
+	 */
+            background-size: contain;
+            transform-style: preserve-3d;
+            transform-origin: 0% 50%;
+            transform: perspective(800px) rotateY(0deg);
+            transition: all 0.8s ease-in-out;
+        }
+        
+        .card:hover .front {
+            transform: perspective(800px) rotateY(-170deg);
+            background-color: #41718d;
+        }
+        
+        .card:hover .back {
+            transform: perspective(800px) rotateY(-170deg);
+            box-shadow: 7px 0px 5px 0px rgba(0, 0, 0, 0.3), inset 2px 0px 15px 0px rgba(0, 0, 0, 0.1);
+            background-color: #d2dcd2;
+        }
+        
+        .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 10px solid #9612eb;
+            margin: -10px 0px 0px -10px;
+            backface-visibility: visible;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, .5));
+            transform-style: preserve-3d;
+            transform-origin: 0% 50%;
+            transform: perspective(800px) rotateY(0deg);
+            transition: all 0.8s ease-in-out;
+            background-color: #e6f0e6;
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
+        }
+        
+        .imgset {
+            position: relative;
+            z-index: 1;
+            margin-bottom: -215px;
+        }
+        
+        .imgset img {
+            box-shadow: 0px 6px 11px 7px rgba(0, 0, 0, 0.22);
+            border-radius: 5px;
+        }
+        
+        .frame {
+            display: flex;
+            place-content: center;
+            flex-wrap: wrap;
+            margin-left: 10px;
+        }
+        
+        .box {
+            height: 200px;
+            width: 400px;
+            position: relative;
+            border: #9612eb solid 5px;
+            overflow: hidden;
+        }
+        
+        .photo img {
+            width: 400px;
+            height: 200px;
+        }
+        
+        .detail {
+            position: absolute;
+            height: 200px;
+            width: 400px;
+            top: 0;
+            color: white;
+            display: none;
+        }
+        
+        .box:hover .detail {
+            display: block;
+            background-color: rgba(150, 18, 235, 0.7);
+            height: 200px;
+        }
+        
+        .box:hover .photo img {
+            transform: scale(1.3);
+            transition: 2s;
+        }
+        
+        h1 {
+            font-weight: 2400;
+            text-align: center;
+            font-size: xx-large;
+            margin-top: 65px;
+            /* background-color: purple; */
+        }
+        
+        .container {
+            position: relative;
+            width: 50%;
+        }
+        
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        
+        .overlay {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background-color: purple;
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+        }
+        
+        .container:hover .overlay {
+            bottom: 0;
+            height: 100%;
+        }
+        
+        .text {
+            white-space: nowrap;
+            color: white;
+            font-size: 20px;
+            position: absolute;
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+        
+        .float {
+            display: flex;
+        }
+        
+        .glow {
+            font-size: 40px;
+            color: #fff;
+            text-align: center;
+            animation: glow 1s ease-in-out infinite alternate;
+            font-family: cursive;
+        }
+        
+        .pic {
+            background-color: purple;
+        }
+        
+        @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
+        }
+        
+        .wish {
+            font-family: 'sofia';
+            font-size: 9px;
+        }
+        
+        .button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        
+        .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+            border-radius: 30px;
+        }
+        
+        .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+            border-radius: 30px;
+        }
+        
+        .button2:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+        
+        .button3 {
+            background-color: white;
+            color: black;
+            border: 2px solid #f44336;
+            border-radius: 30px;
+        }
+        
+        .button3:hover {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .button4 {
+            background-color: white;
+            color: black;
+            border: 2px solid yellow;
+            border-radius: 30px;
+        }
+        
+        .button4:hover {
+            background-color: yellow;
+        }
+        
+        .button6 {
+            background-color: purple;
+            color: white;
+            border: 2px solid #f44336;
+            border-radius: 30px;
+        }
+        
+        .button6:hover {
+            background-color: orange;
+            color: black
+        }
+        
+        .msg1,
+        .msg2,
+        .msg3,
+        .msg4 {
+            display: none;
+        }
+        
+        .bt1:hover+.msg1,
+        .bt2:hover+.msg2,
+        .bt3:hover+.msg3,
+        .bt4:hover+.msg4 {
+            display: block;
+        }
+        
+        .all1,
+        .all2,
+        .all3,
+        .all4 {
+            display: flex;
+        }
+        
+        h3 {
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" src="img9.jpg">
+                <h3>Happy Birthday To You!🥰💛</h3>
+                <h4 style="color: #d2dcd2;">I wish you an abundance of blessings today and always. Have a fantastic birthday.
+                </h4>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Happy Birthday K͜͡ing٭JoJo💙💜</p>
+            <p>As you celebrate your birthday, my wish is that you’re surrounded by good friends, loving family, and mouth-watering food. May showers of blessings fall upon you on your birthday and beyond.
+            </p>
+            <p>Hope your day goes great!</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" src="pic1.jpg">
+                <h4 style="color: #fff;">It is my prayer that all your wishes come true on your special day😘😇
+                </h4>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Happy Birthday K͜͡ing٭JoJo💛💚</p>
+            <p>As you turn a year older and wiser, I wish you nothing but an overflowing fountain of love.</p>
+            <p>Hope your day goes great!</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" src="pic2.jfif">
+                <h3>Happy birthday,PUBG BFF!🪂💜
+                </h3>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Happy Birthday K͜͡ing٭JoJo🧡🤎</p>
+            <p>I hope your special day will bring you lots of happiness, love, and fun. You deserve them a lot. Enjoy!</p>
+            <p>Hope your day goes great!</p>
+        </div>
+    </div>
+    <h1 class="glow pic">Happy Birthday K͜͡ing٭JoJo💜👑</h1>
+    <section class="frame">
+
+
+        <div class="box">
+            <div class="photo">
+                <img src="img4.jfif" alt=""> </div>
+            <div class="detail glow">
+                <h1>Happy🧡</h1>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="img5.jfif" alt=""> </div>
+            <div class="detail glow">
+                <h1>Birthday🧡</h1>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="img6.jfif" alt=""> </div>
+            <div class="detail glow">
+                <h1>To🧡</h1>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="img7.jfif" alt=""> </div>
+            <div class="detail glow">
+                <h1>You🧡</h1>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="img8.jfif" alt=""> </div>
+            <div class="detail glow">
+                <h1>My🧡</h1>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="p-9.jfif" alt=""> </div>
+            <div class="detail glow">
+                <h1>PUBG-partner🧡</h1>
+            </div>
+
+        </div>
+    </section>
+    <div class="float">
+        <div class="container">
+            <img src="pubg-logo.jpg" alt="Avatar" class="image">
+            <div class="overlay">
+                <div class="text wish">May you have all the love your heart can hold,<br/> all the happiness a day can bring,<br/> and all the blessings a life can unfold. Happy birthday!💜</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="pubg2.png" alt="Avatar" class="image">
+            <div class="overlay">
+                <div class="text wish">Best wishes to my beloved friend for an amazing year ahead. <br/> May the sunshine of happiness always shine above you. <br/> May the dove of peace rest over you and live in your home. <br/> May the dense forest of love surround you all
+                    year round. Happy Birthday🥳💜
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Click here to see some magical words!&#128525;</h3>
+    </div>
+
+    <div class="all1">
+        <div class="bt1">
+            <button class="button button1">Green</button>
+        </div>
+        <div class="msg1">
+            <h3>You are such a nice person!&#128151; </h3>
+        </div>
+    </div>
+    <div class="all2">
+        <div class="bt2">
+            <button class="button button2">Blue</button>
+        </div>
+        <div class="msg2">
+            <h3>You are a pro player&#128512;(জানি বিশ্বাস করবেন না🥺)</h3>
+        </div>
+
+    </div>
+    <div class="all3">
+        <div class="bt3">
+            <button class="button button3">Red</button>
+        </div>
+        <div class="msg3">
+            <h3>You are loyal and kind hearted!🥰(প্রতি ম্যাচে আমাকে শত শত বার রিভাইব দেওয়ার জন্য ধন্যবাদ 😁😎) </h3>
+        </div>
+
+    </div>
+    <div class="all4">
+        <div class="bt4">
+            <button class="button button4">Yellow</button>
+        </div>
+        <div class="msg4">
+            <h3>Your bravery, kindness and innocence are the things that makes you so beautiful.😇 </h3>
+        </div>
+
+    </div>
+
+    <a href="https://youtu.be/VJ2rlci9PE0" target="_blank"><button class="button button6">click here to listen your favourite song🔥🌼</button></a>
+    <a href="https://www.youtube.com/watch?v=GgASxM_Ju_c" target="_blank"><button class="button button6">And Here is your favourite sad song😒🤦</button></a>
+
+    <div style="text-align:center;">
+        <h2 style="background-color: orchid;">Some of the memories of us in PUBG🥰</h2>
+        <video width="320" height="240" controls>
+        <source src="pubg.mp4" type="video/mp4">
+        
+</div>
+<h3 style="color: white;text-align:center;">ধন্যবাদ!অনেক ধৈর্য সহকারে সাইট টি পর্যবেক্ষণ করার জন্য 🌼😌</h3>
+</body>
+
+</html>
